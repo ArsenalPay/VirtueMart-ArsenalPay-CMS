@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
+    <name>ArsenalPay</name>
+    <creationDate>September 9 2014</creationDate>
+    <author>ArsenalPay</author>
+    <authorUrl>http://www.arsenalpay.ru</authorUrl>
+    <copyright>Copyright (C) 2014 ArsenalMedia. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <version>2.0</version>
+    <description>ArsenalPay payment plugin</description>
+
+    <files>
+        <filename plugin="arsenalpay">arsenalpay.php</filename>
+        <folder>language</folder>
+    </files>
+    <params addpath="/administrator/components/com_virtuemart/elements">
+        <param type="vmjpluginwarning"/>
+        <param type="vmtitle" default="VMPAYMENT_ARSENALPAY_SETUP_SECTION"
+               description="VMPAYMENT_ARSENALPAY_SETUP_DESC"/>
+	<param name="unique_id" type="text" label="VMPAYMENT_ARSENALPAY_UNIQUE_ID" description="VMPAYMENT_ARSENALPAY_UNIQUE_ID_DESC"/>
+	<param name="frame_url" type="text" size="50"
+                label="VMPAYMENT_ARSENALPAY_FRAME_URL" default="https://arsenalpay.ru/payframe/pay.php"/>
+	<param name="payment_src" type="list" default="card" label="VMPAYMENT_ARSENALPAY_PAYMENT_SRC" description="VMPAYMENT_ARSENALPAY_PAYMENT_SRC_DESC">
+            <option value="card">card</option>
+            <option value="mk">mk</option>
+        </param>
+	<param name="allowed_ip" type="text" label="VMPAYMENT_ARSENALPAY_ALLOWED_IP" description="VMPAYMENT_ARSENALPAY_ALLOWED_IP_DESC"/>
+	<param name="sign_key" type="text" label="VMPAYMENT_ARSENALPAY_SIGN_KEY" description="VMPAYMENT_ARSENALPAY_SIGN_KEY_DESC"/>
+        <param name="css_url" type="text" label="VMPAYMENT_ARSENALPAY_CSS_FILE" description="VMPAYMENT_ARSENALPAY_CSS_FILE_DESC"/>
+        <param name="f_mode" type="text" size="5" default="1" label="VMPAYMENT_ARSENALPAY_FRAME_MODE" description="VMPAYMENT_ARSENALPAY_FRAME_MODE_DESC"/>
+		
+        <param name="payer_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL_DESC"/>
+        <param name="payment_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL_DESC"/>
+        
+        <param name="status_pending" type="vmorderstate" scope="com_virtuemart" default="P"
+               label="VMPAYMENT_ARSENALPAY_STATUS_PENDING" description="VMPAYMENT_ARSENALPAY_STATUS_PENDING_EXPLAIN"/>
+			   
+		<param name="status_confirmed" type="vmorderstate" scope="com_virtuemart" default="C"
+               label="VMPAYMENT_ARSENALPAY_STATUS_CONFIRMED" description="VMPAYMENT_ARSENALPAY_STATUS_CONFIRMED_EXPLAIN"/>
+			   
+		<param name="status_cancelled" type="vmorderstate" scope="com_virtuemart" default="X"
+               label="VMPAYMENT_ARSENALPAY_STATUS_CANCELLED" description="VMPAYMENT_ARSENALPAY_STATUS_CANCELLED_EXPLAIN"/>
+        
+        <param type="vmtitle" default="VMPAYMENT_ARSENALPAY_FRAME_PARAMS_SECTION" description="VMPAYMENT_ARSENALPAY_FRAME_PARAMS_SECTION_DESC"/>      
+		
+        <param name="f_width" type="text" label="VMPAYMENT_ARSENALPAY_FRAME_WIDTH" default="750"/>
+        <param name="f_height" type="text" label="VMPAYMENT_ARSENALPAY_FRAME_HEIGHT" default="750"/>
+        <param name="f_border" type="list" default="0" label="VMPAYMENT_ARSENALPAY_FRAME_BORDER" description="VMPAYMENT_ARSENALPAY_FRAME_BORDER_TIP">
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </param>
+        <param name="f_scrolling" type="list" default="auto" label="VMPAYMENT_ARSENALPAY_FRAME_SCROLLING" description="VMPAYMENT_ARSENALPAY_FRAME_SCROLLING_TIP">
+            <option value="auto">auto</option>
+            <option value ="yes">yes</option>
+            <option value ="no">no</option>
+        </param>
+        <!-- Restrictions section -->
+        <param type="vmtitle" default="VMPAYMENT_ARSENALPAY_RESTRICTIONS_SECTION"
+               description="VMPAYMENT_ARSENALPAY_RESTRICTIONS_SECTION_DESC"/>
+        <param name="countries" type="vmcountries" scope="com_virtuemart" default=""
+               label="VMPAYMENT_ARSENALPAY_COUNTRIES" description="VMPAYMENT_ARSENALPAY_COUNTRIES_DESC"/>
+        <param name="min_amount" type="text" label="VMPAYMENT_ARSENALPAY_MIN_AMOUNT"
+               description="VMPAYMENT_ARSENALPAY_MIN_AMOUNT_TIP"/>
+        <param name="max_amount" type="text" label="VMPAYMENT_ARSENALPAY_MAX_AMOUNT"
+               description="VMPAYMENT_ARSENALPAY_MAX_AMOUNT_TIP"/>
+        
+        
+        <!-- Fees section -->
+        <param type="vmtitle" default="VMPAYMENT_ARSENALPAY_FEE_SECTION"
+               description="VMPAYMENT_ARSENALPAY_FEE_SECTION_DESC"/>
+        <param name="cost_per_transaction" type="text" label="VMPAYMENT_ARSENALPAY_COST_PER_TRANSACTION"
+               description="VMPAYMENT_ARSENALPAY_COST_PER_TRANSACTION_EXPLAIN"/>
+        <param name="cost_percent_total" type="text" label="VMPAYMENT_ARSENALPAY_COST_PERCENT_TOTAL"
+               description="VMPAYMENT_ARSENALPAY_COST_PERCENT_TOTAL_EXPLAIN"/>
+        <param name="tax_id" type="vmtaxes" scope="com_virtuemart" label="VMPAYMENT_ARSENALPAY_TAX"
+               description="VMPAYMENT_ARSENALPAY_TAX_DESC"/>
+		
+	<!-- Other -->		
+	<param name="payment_logos" type="vmfiles" label="VMPAYMENT_ARSENALPAY_LOGOS"
+               description="VMPAYMENT_ARSENALPAY_LOGOS_DESC"
+               directory="/images/stories/virtuemart/payment"
+               default="default" hide_default="1" hide_none="1"
+               stripext="0" exclude="^_"/>
+    </params>
+        
+       
+        
+    <config>
+        <fields name="params">
+            <fieldset name="payment"  addfieldpath="/administrator/components/com_virtuemart/fields">
+                <field type="vmjpluginwarning"/>
+                
+                <field name="unique_id" type="text" label="VMPAYMENT_ARSENALPAY_UNIQUE_ID" description="VMPAYMENT_ARSENALPAY_UNIQUE_ID_DESC"/>
+                <field name="frame_url" type="text" size="50"
+                    label="VMPAYMENT_ARSENALPAY_FRAME_URL" default="https://arsenalpay.ru/payframe/pay.php"/>
+                <field name="payment_src" type="list" default="card" label="VMPAYMENT_ARSENALPAY_PAYMENT_SRC" description="VMPAYMENT_ARSENALPAY_PAYMENT_SRC_DESC">
+                    <option value="card">card</option>
+                    <option value="mk">mk</option>
+                </field>
+                <field name="allowed_ip" type="text" label="VMPAYMENT_ARSENALPAY_ALLOWED_IP" description="VMPAYMENT_ARSENALPAY_ALLOWED_IP_DESC"/>
+                <field name="sign_key" type="text" label="VMPAYMENT_ARSENALPAY_SIGN_KEY" description="VMPAYMENT_ARSENALPAY_SIGN_KEY_DESC"/>
+                <field name="css_url" type="text" label="VMPAYMENT_ARSENALPAY_CSS_FILE" description="VMPAYMENT_ARSENALPAY_CSS_FILE_DESC"/>
+                <field name="f_mode" type="text" size="5" default="1" label="VMPAYMENT_ARSENALPAY_FRAME_MODE" description="VMPAYMENT_ARSENALPAY_FRAME_MODE_DESC"/>
+
+                <field name="payer_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL_DESC"/>
+                <field name="payment_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL_DESC"/>
+
+                <field name="status_pending" type="vmorderstate" scope="com_virtuemart" default="P"
+                       label="VMPAYMENT_ARSENALPAY_STATUS_PENDING" description="VMPAYMENT_ARSENALPAY_STATUS_PENDING_EXPLAIN"/>
+				<field name="status_confirmed" type="vmorderstate" scope="com_virtuemart" default="C"
+                       label="VMPAYMENT_ARSENALPAY_STATUS_CONFIRMED" description="VMPAYMENT_ARSENALPAY_STATUS_CONFIRMED_EXPLAIN"/>
+				<field name="status_cancelled" type="vmorderstate" scope="com_virtuemart" default="X"
+                       label="VMPAYMENT_ARSENALPAY_STATUS_CANCELLED" description="VMPAYMENT_ARSENALPAY_STATUS_CANCELLED_EXPLAIN"/>
+
+                <field type="vmtitle" default="VMPAYMENT_ARSENALPAY_FRAME_PARAMS_SECTION" description="VMPAYMENT_ARSENALPAY_FRAME_PARAMS_SECTION_DESC"/>      
+
+                <field name="f_width" type="text" label="VMPAYMENT_ARSENALPAY_FRAME_WIDTH" default="750"/>
+                <field name="f_height" type="text" label="VMPAYMENT_ARSENALPAY_FRAME_HEIGHT" default="750"/>
+                <field name="f_border" type="list" default="0" label="VMPAYMENT_ARSENALPAY_FRAME_BORDER" description="VMPAYMENT_ARSENALPAY_FRAME_BORDER_TIP">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </field>
+                <field name="f_scrolling" type="list" default="auto" label="VMPAYMENT_ARSENALPAY_FRAME_SCROLLING" description="VMPAYMENT_ARSENALPAY_FRAME_SCROLLING_TIP">
+                    <option value="auto">auto</option>
+                    <option value ="yes">yes</option>
+                    <option value ="no">no</option>
+                </field>
+            </fieldset>
+            
+            <fieldset name="restrictions" >
+                <field name="countries" type="vmcountries" scope="com_virtuemart" default=""
+                        label="VMPAYMENT_ARSENALPAY_COUNTRIES" description="VMPAYMENT_ARSENALPAY_COUNTRIES_DESC"/>
+                <field name="min_amount" type="text" label="VMPAYMENT_ARSENALPAY_MIN_AMOUNT"
+                        description="VMPAYMENT_ARSENALPAY_MIN_AMOUNT_TIP"/>
+                <field name="max_amount" type="text" label="VMPAYMENT_ARSENALPAY_MAX_AMOUNT"
+                        description="VMPAYMENT_ARSENALPAY_MAX_AMOUNT_TIP"/>
+            </fieldset>
+            
+            <fieldset name="fee">
+                <field name="cost_per_transaction" type="text" label="VMPAYMENT_ARSENALPAY_COST_PER_TRANSACTION"
+                       description="VMPAYMENT_ARSENALPAY_COST_PER_TRANSACTION_EXPLAIN"/>
+                <field name="cost_percent_total" type="text" label="VMPAYMENT_ARSENALPAY_COST_PERCENT_TOTAL"
+                       description="VMPAYMENT_ARSENALPAY_COST_PERCENT_TOTAL_EXPLAIN"/>
+                <field name="tax_id" type="vmtaxes" scope="com_virtuemart" label="VMPAYMENT_ARSENALPAY_TAX"
+                       description="VMPAYMENT_ARSENALPAY_TAX_DESC"/>
+            </fieldset>
+            
+            <fieldset name="template">
+                <field name="payment_logos" type="media" directory="/images/stories/virtuemart/payment"
+                       hide_none="1" label="VMPAYMENT_ARSENALPAY_LOGOS"
+                       size="40"
+                       description="VMPAYMENT_ARSENALPAY_LOGOS_DESC"/>
+            </fieldset>
+        </fields>
+    </config>
+
+
+</extension>
