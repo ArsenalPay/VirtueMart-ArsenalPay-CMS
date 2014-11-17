@@ -30,7 +30,9 @@
         <param name="f_mode" type="text" size="5" default="1" label="VMPAYMENT_ARSENALPAY_FRAME_MODE" description="VMPAYMENT_ARSENALPAY_FRAME_MODE_DESC"/>
 		
         <param name="payer_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL_DESC"/>
-        <param name="payment_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL_DESC"/>
+        <param name="payment_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL" default="" description="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL_DESC"/>
+		
+
         
         <param name="status_pending" type="vmorderstate" scope="com_virtuemart" default="P"
                label="VMPAYMENT_ARSENALPAY_STATUS_PENDING" description="VMPAYMENT_ARSENALPAY_STATUS_PENDING_EXPLAIN"/>

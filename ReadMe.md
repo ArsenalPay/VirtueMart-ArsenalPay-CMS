@@ -1,7 +1,5 @@
 # ArsenalPay for VirtueMart of Joomla! CMS
 
-[Arsenal Media LLC](http://www.arsenalmedia.ru/index.php/en)
-
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
@@ -19,13 +17,19 @@ Basic feature list:
 2. Go to Joomla! administrator panel to install the plugin using extension manager.
 3. After plugin successfully installed go to **Components->VirtueMart->Payment Methods**
 4. Create new payment method. 
-5. There assign **Payment Name** and choose **Published** to **Yes**. 
-6. When **Save** button will be pushed, you will be able to configure the plugin.
+5. In the **Payment Method Information** tab:
+	In the **Payment Name** field enter the name of your payment
+	Set the **Published** radio button to **Yes**
+	In dropdown **Payment Method** select  the payment method **ArsenalPay**
+	In the top right toolbar, click Save. This step will load the configuration parameters of the payment method you just created.
+	Go on the Configuration tab, and configure the payment method.
 
 ## Settings
 1. Choose in **Components->VirtueMart->Payment Methods** choose created ArsenalPay payment method and go into it.
 3. Click on **Configuration**. 
 4. Make proper settings and save.
+Callback URL-address:
+`[ваш-адрес-сайта]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`
 
 ## How to uninstall
 2. Delete created ArsenalPay method from **Components->VirtueMart->Payment Methods**.
@@ -65,9 +69,7 @@ After successful installation and proper settings new choice of payment method w
 6. Заполните необходимые настройки и нажмите сохранить.
 
 Адрес колбэка
-`[ваш-адрес-сайта]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=[id-этого-метода]`
-
-`id_этого_метода` нужно взять в столбце Id таблицЫ методов оплат VirtueMart (Компоненты->VirtueMart->Методы оплаты)
+`[ваш-адрес-сайта]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`
 ### УДАЛЕНИЕ
 1. Удалите метод оплаты ArsenalPay из методов оплат VirtueMart по пути **Компоненты->VirtueMart->Методы оплаты**
 2. Чтобы удалить файлы с сервера, деинсталлируйте ArsenalPay через менеджер расширений Joomla!
