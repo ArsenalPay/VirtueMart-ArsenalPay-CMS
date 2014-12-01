@@ -17,7 +17,7 @@
         <param type="vmjpluginwarning"/>
         <param type="vmtitle" default="VMPAYMENT_ARSENALPAY_SETUP_SECTION"
                description="VMPAYMENT_ARSENALPAY_SETUP_DESC"/>
-		<param name="unique_id" type="text" label="VMPAYMENT_ARSENALPAY_UNIQUE_ID" description="VMPAYMENT_ARSENALPAY_UNIQUE_ID_DESC"/>
+		<param name="unique_id" type="text" size="50" label="VMPAYMENT_ARSENALPAY_UNIQUE_ID" description="VMPAYMENT_ARSENALPAY_UNIQUE_ID_DESC"/>
 		<param name="frame_url" type="text" size="50" label="VMPAYMENT_ARSENALPAY_FRAME_URL" default="https://arsenalpay.ru/payframe/pay.php" description="VMPAYMENT_ARSENALPAY_FRAME_URL_DESC"/>
 		<param name="payment_src" type="list" default="card" label="VMPAYMENT_ARSENALPAY_PAYMENT_SRC" description="VMPAYMENT_ARSENALPAY_PAYMENT_SRC_DESC">
             <option value="card">card</option>
@@ -34,7 +34,10 @@
                label="VMPAYMENT_ARSENALPAY_STATUS_CONFIRMED"/>   
 		<param name="status_cancelled" type="vmorderstate" scope="com_virtuemart" default="X"
                label="VMPAYMENT_ARSENALPAY_STATUS_CANCELLED"/>
-        <param name="f_mode" type="text" size="5" default="1" label="VMPAYMENT_ARSENALPAY_FRAME_MODE" description="VMPAYMENT_ARSENALPAY_FRAME_MODE_DESC"/>
+		<param name="f_mode" type="radio" default="1" label="VMPAYMENT_ARSENALPAY_FRAME_MODE" description="VMPAYMENT_ARSENALPAY_FRAME_MODE_DESC">
+            <option value="0">COM_VIRTUEMART_NO</option>
+            <option value="1">COM_VIRTUEMART_YES</option>
+        </param>
 		
         <param type="vmtitle" default="VMPAYMENT_ARSENALPAY_FRAME_PARAMS_SECTION" description="VMPAYMENT_ARSENALPAY_FRAME_PARAMS_SECTION_DESC"/>      
         <param name="f_width" type="text" label="VMPAYMENT_ARSENALPAY_FRAME_WIDTH" default="750"/>

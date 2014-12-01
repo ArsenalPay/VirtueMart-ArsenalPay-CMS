@@ -20,8 +20,8 @@ Basic feature list:
  * Supports two languages (Russian, English).
  
 ##How to install
-1. Download the latest version  of plugin using
-`git clone https://github.com/...`
+1. Download as zip archive from 
+`https://github.com/...`
 2. Go to Joomla! administrator panel to install the plugin using extension manager.
 3. After plugin successfully installed go to **Components->VirtueMart->Payment Methods**.
 4. Create new payment method. 
@@ -43,7 +43,7 @@ Basic feature list:
  - Set **Callback URL** as `http(s)://[your-site-address]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`. Your online shop will be receiving callback requests about processed payments for automatically change of order status. The callbacks will be sent onto this address.
  - If it is needed to check a payer order number before payment processing you should fill out the field of **Check URL** in the module settings with url-address to which ArsenalPay will be sending requests with check parameters. By default the address is the same with **Callback URL**. 
  - Set order statuses for successful, pending and failed transactions.
- - Set **Frame mode** as `1` to display payment frame inside your site, otherwise a payer will be redirected directly to the payment frame url.
+ - You can display payment page inside frame at your site, or to redirect a payer directly to the payment page url.
  - You can adjust **width**, **height**, **frameborder** and **scrolling** of ArsenalPay payment frame by setting iframe parameters.
 
 ## How to uninstall
@@ -87,7 +87,7 @@ After successful installation and proper settings new choice of payment method w
  - Для **URL для обратного запроса** задайте значение `http(s)://[ваш-адрес-сайта]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`. Ваш интернет-магазин будет получать уведомления о совершенных платежах: на адрес, указанный в этом поле, от ArsenalPay будет поступать запрос с результатом платежа для фиксирования статусов заказа в системе предприятия. 
  - При необходимости осуществления проверки номера заказа перед проведением платежа, Вы должны заполнить поле **URL для проверки**, на который от ArsenalPay будет поступать запрос на проверку. По умолчанию значение совпадает с **URL для обратного запроса**.
  - Установите статус для успешных, ожидаемых и неудавшихся платежей.
- - Вы можете устанавливать **Режим отображения фрейма**. Значение `1` соответствует отображению фрейма внутри Вашего сайта , иначе пользователь будет перенаправляться напрямую на адрес платежного фрейма.
+ - Вы можете отображать платежную страницу внутри фрейма на Вашем сайте, либо перенаправлять пользователя напрямую по адресу платежной страницы.
  - Вы можете подгонять ширину, высоту, границу и прокрутку платежного фрейма, задавая соответствующие значения параметров iframe.
 
 ### УДАЛЕНИЕ

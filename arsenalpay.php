@@ -22,7 +22,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $jlang->load ('plg_vmpayment_arsenalpay', JPATH_ADMINISTRATOR, NULL, TRUE);
                 $this->_loggable = TRUE;
                 $this->_debug = TRUE;
-                //assign payment parameters from plugin configuration to paymentmethods table #_virtuemart_paymentmethods (payment_params column)
+                //assign payment parameters from plugin configuration to paymentmethod table #_virtuemart_paymentmethods (payment_params column)
                 $varsToPush = $this->getVarsToPush ();
                 $this->setConfigParameterable($this->_configTableFieldName, $varsToPush);
                 //assign columns for arsenalpay payment plugin table #_virtuemart_payment_plg_arsenalpay
@@ -75,7 +75,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                         'tax_id' => 'smallint(11) DEFAULT NULL',
                         'user_session' => 'varchar(255)',
 
-                        // status report data returned by ArsenalPay to the merchant
+                        // status report data returned by ArsenalPay to merchant
                         'arspay_response_ID' => 'char(32)',
                         'arspay_response_FUNCTION' => 'char(15)',//FUNCTION 
                         'arspay_response_RRN' => 'varchar(20)',//RRN 
@@ -105,8 +105,8 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
         //============================================================================================================================================
         //FRONTEND
         /**
-         * This method is called after buyer set confirm purchase in check out. 
-         * It loads ArsenalPay payment frame with iframe.
+         * This method is called after payer set confirm purchase in check out. 
+         * It loads ArsenalPay payment frame.
          */
         function plgVmConfirmedOrder($cart, $order) {
                 if (!($method = $this->getVmPluginMethod($order['details']['BT']->virtuemart_paymentmethod_id))) {
@@ -156,7 +156,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 
                 
         
-                // Prepare data that should be stored in the database.
+                // Prepare data that should be stored in the database for arsenalpay payment method.
 
                 $dbValues['user_session'] = $return_context;
                 $dbValues['order_number'] = $order['details']['BT']->order_number;
@@ -219,6 +219,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
         //********************  Here are methods used in processing a callback  ***************//
         //========================================================================================
         function plgVmOnPaymentNotification () {
+		
             if (!class_exists ('VirtueMartCart')) {
                     require(JPATH_VM_SITE . DS . 'helpers' . DS . 'cart.php');
                 }
@@ -229,7 +230,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                     require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
                 }
             $callback_msg = VRequest::getPost();
-            // the GET payment paymentmethod parameter in notification url. 
+            // the GET paymentmethod parameter in notification url. 
             $virtuemart_paymentmethod = vRequest::getVar ('pm', 0);
             if ($virtuemart_paymentmethod!='arsenalpay') {
                 $this->exitf('ERR');
@@ -246,7 +247,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $this->exitf('ERR_ACCOUNT');
                 }
             elseif ( $callback_msg['FUNCTION']=='check' && $callback_msg['FUNCTION']=='check' ) {
-			$this->exitf('YES');
+				$this->exitf('YES');
 			}
             if (!($method = $this->getVmPluginMethod($paymentTable->virtuemart_paymentmethod_id))) {
                     $this->exitf('ERR');
@@ -267,27 +268,26 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
             // Without this block in the renewed table after response all the preload data will be nulled.
             //========================================================================================================================
 
-            //check the response data with the preload confirm data
+            //check the callback data with the preload confirm data saved in the database
             $order_info = VirtueMartModelOrders::getOrder($virtuemart_order_id);
             if (($paymentTable->order_number!=$order_info['details']['BT']->order_number) OR 
                     (number_format($paymentTable->payment_order_total, 2, '.', '')!=$callback_msg['AMOUNT'])) {
                     $this->exitf( 'ERR_CALLBACK_DATA' );
                 }
-                
             //=======================================================================================================================
             $keyArray = array(
             'ID',           /* merchant identifier */
-            'FUNCTION',     /* type of request to which the response is received*/
+            'FUNCTION',     /* request type: check or payment*/
             'RRN',          /* transaction identifier */
             'PAYER',        /* payer(custom) identifier */
             'AMOUNT',       /* payment amount */
             'ACCOUNT',      /* order number */
-            'STATUS',       /* Payment status. When 'check' - response for the order number checking, when 'payment' - response for status change.*/
+            'STATUS',       /* Payment status. */
             'DATETIME',     /* Date and time in ISO-8601 format, urlencoded.*/
-            'SIGN',         /* response sign = md5(md5(ID).md(FUNCTION).md5(RRN).md5(PAYER).md5(AMOUNT).md5(ACCOUNT).md(STATUS).md5(PASSWORD)) */       
+            'SIGN',         /* callback request sign = md5(md5(ID).md(FUNCTION).md5(RRN).md5(PAYER).md5(AMOUNT).md5(ACCOUNT).md(STATUS).md5(PASSWORD)) */       
             ); 
             /**
-             * Checking the absence of each parameter in the post response.
+             * Checking the absence of each parameter in the post request.
              */
             foreach( $keyArray as $key ) {
                     if( empty( $callback_msg[$key] )||!array_key_exists( $key,$callback_msg) ){
@@ -295,7 +295,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                         }
                 }  
                 /**
-                 * Checking the response sign validness.
+                 * Checking the request sign validness.
                  */
 
             if( !( $this->_checkSign( $callback_msg, $method->sign_key ) ) ) {
@@ -312,8 +312,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 					
                     //We delete the old stuff
                     // get the correct cart session
-                    $cart = VirtueMartCart::getCart();
-                    $cart->emptyCart();
+                    //$cart = VirtueMartCart::getCart();
+                    //$cart->emptyCart();
+					$this->emptyCart( $paymentTable->user_session, $paymentTable->order_number ); 
                     $this->exitf( 'OK' );            
                 }
             else {
@@ -344,7 +345,20 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
          */
           // actions after responce is received, to redirect user to the order result page after confirmation.
         function plgVmOnPaymentResponseReceived(&$html) {
-                return true;
+		
+			if (!class_exists ('VirtueMartCart')) {
+				require(JPATH_VM_SITE . DS . 'helpers' . DS . 'cart.php');
+			}
+			if (!class_exists ('shopFunctionsF')) {
+				require(JPATH_VM_SITE . DS . 'helpers' . DS . 'shopfunctionsf.php');
+			}
+			if (!class_exists ('VirtueMartModelOrders')) {
+				require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
+			}
+
+			$cart = VirtueMartCart::getCart ();
+			$cart->emptyCart ();
+            return true;
             } 
 
         // What to do after payment cancel
@@ -397,7 +411,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
         //==========================================================================================
         //FRONTEND
         /**
-         * Display stored payment data for an order
+         * Display stored order payment data
          *
          */
         function plgVmOnShowOrderBEPayment($virtuemart_order_id, $virtuemart_payment_id) {
