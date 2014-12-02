@@ -23,11 +23,11 @@
             <option value="card">card</option>
             <option value="mk">mk</option>
         </param>
-		<param name="css_url" type="text" label="VMPAYMENT_ARSENALPAY_CSS_FILE" description="VMPAYMENT_ARSENALPAY_CSS_FILE_DESC"/>
+		<param name="css_url" size="50" type="text" label="VMPAYMENT_ARSENALPAY_CSS_FILE" description="VMPAYMENT_ARSENALPAY_CSS_FILE_DESC"/>
 		<param name="sign_key" type="text" label="VMPAYMENT_ARSENALPAY_SIGN_KEY" description="VMPAYMENT_ARSENALPAY_SIGN_KEY_DESC"/>
 		<param name="allowed_ip" type="text" label="VMPAYMENT_ARSENALPAY_ALLOWED_IP" description="VMPAYMENT_ARSENALPAY_ALLOWED_IP_DESC"/>
-		<param name="payer_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL_DESC"/>
-        <param name="payment_callback_url" type="text" label="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL" default="" description="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL_DESC"/>
+		<param name="payer_callback_url" size="50" type="text" label="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL" description="VMPAYMENT_ARSENALPAY_PAYER_CALLBACK_URL_DESC"/>
+        <param name="payment_callback_url" size="50" type="text" label="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL" default="http://your-site-domain/index.php?option=com_virtuemart&amp;view=pluginresponse&amp;task=pluginnotification&amp;tmpl=component&amp;pm=arsenalpay" description="VMPAYMENT_ARSENALPAY_PAYMENT_CALLBACK_URL_DESC"/>
         <param name="status_pending" type="vmorderstate" scope="com_virtuemart" default="P"
                label="VMPAYMENT_ARSENALPAY_STATUS_PENDING"/>   
 		<param name="status_confirmed" type="vmorderstate" scope="com_virtuemart" default="C"

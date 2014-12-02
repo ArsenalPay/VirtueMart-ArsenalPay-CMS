@@ -175,6 +175,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 // Uncomment if such data will be needed to be sent.
                 /*$post_variables = Array(
                                             'transaction_id'           => $order['details']['BT']->order_number,
+											//url to redirect after confirmation
                                             'return_url'               => JURI::root () .
                                                     'index.php?option=com_virtuemart&view=pluginresponse&task=pluginresponsereceived&on=' .
                                                     $order['details']['BT']->order_number .
@@ -182,6 +183,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                                                     $order['details']['BT']->virtuemart_paymentmethod_id .
                                                     '&Itemid=' . vRequest::getInt ('Itemid') .
                                                     '&lang='.vRequest::getCmd('lang',''),
+											//url to redirect after cancel
                                             'cancel_url'               => JURI::root () .
                                                     'index.php?option=com_virtuemart&view=pluginresponse&task=pluginUserPaymentCancel&on=' .
                                                     $order['details']['BT']->order_number .
@@ -189,9 +191,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                                                     $order['details']['BT']->virtuemart_paymentmethod_id .
                                                     '&Itemid=' . vRequest::getInt ('Itemid') .
                                                     '&lang='.vRequest::getCmd('lang',''),
-                                            'status_url'               => JURI::root () .
-                                                    'index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&lang='.vRequest::getCmd('lang','') ,
-                                            'amount'  				   => $totalInPaymentAmount);
+                                            'callback_url'               => JURI::root () .
+													'index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&lang='.vRequest::getCmd('lang','') ,
+													'amount'  				   => $totalInPaymentAmount);
                 $content = http_build_query ($post_variables);  */
                 //==========================================================================
                 // The code for setting an iframe.
@@ -363,7 +365,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 
         // What to do after payment cancel
         function plgVmOnUserPaymentCancel() {
-                /*if (!class_exists('VirtueMartModelOrders')) {
+                if (!class_exists('VirtueMartModelOrders')) {
                         require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
                 }
 
@@ -386,7 +388,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $return_context = $session->getId();
                 if (strcmp($paymentTable->user_session, $return_context) === 0) {
                         $this->handlePaymentUserCancel($virtuemart_order_id);
-                }*/
+                }
                 return TRUE;
             }
 
