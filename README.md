@@ -21,7 +21,7 @@ Basic feature list:
  
 ## How to install
 1. Download as zip archive from 
-`https://github.com/...`
+`https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/`
 2. Go to Joomla! administrator panel to install the plugin using extension manager.
 3. After plugin successfully installed go to **Components->VirtueMart->Payment Methods**.
 4. Create a new payment method. 
@@ -62,7 +62,7 @@ After successful installation and proper settings new choice of payment method w
 
 ------------------
 ### О МОДУЛЕ
-* Модуль платежной системы ArsenalPay под Joomshopping позволяет легко встроить платежную страницу на Ваш сайт.
+* Модуль платежной системы ArsenalPay под VirtueMart позволяет легко встроить платежную страницу на Ваш сайт.
 * После установки модуля у Вас появится новый вариант оплаты товаров и услуг через платежную систему ArsenalPay.
 * Платежная система ArsenalPay позволяет совершать оплату с различных источников списания средств: мобильных номеров (МТС/Мегафон/Билайн/TELE2), пластиковых карт (VISA/MasterCard/Maestro). Перечень доступных источников средств постоянно пополняется. Следите за обновлениями.
 * Модуль поддерживает русский и английский языки.
@@ -70,7 +70,7 @@ After successful installation and proper settings new choice of payment method w
 За более подробной информацией о платежной системе ArsenalPay обращайтесь по адресу [arsenalpay.ru](http://arsenalpay.ru)
 
 ### УСТАНОВКА
-1. Скачайте  zip архив с платежным плагином ArsenalPay на `http://guthub` .
+1. Скачайте  zip архив с платежным плагином ArsenalPay на `https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/` .
 2. Зайдите в административную панель Joomla! и установите плагин через **Менеджер расширений**.
 3. После успешной установки плагина зайдите в **Компоненты->VirtueMart->Методы оплаты**.
 4. Там создайте новый метод оплаты, указав название для данного метода (например ArsenalPay) и изменив **Опубликовано** на **Да**;
