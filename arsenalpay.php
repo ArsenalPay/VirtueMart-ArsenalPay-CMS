@@ -2,8 +2,10 @@
 
 //@author: Arsenal Media Dev.Team
 //@date: 21.11.2014
+//@license	GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 
-if (!defined('_VALID_MOS') && !defined('_JEXEC'))
+defined('_JEXEC') or die('Restricted access');
+if (!defined('_VALID_MOS') 
         die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
  
 if (!class_exists('vmPSPlugin'))
