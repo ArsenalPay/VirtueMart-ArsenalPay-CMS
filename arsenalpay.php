@@ -1,8 +1,11 @@
 <?php
-
-//@author: Arsenal Media Dev.Team
-//@date: 21.11.2014
-//@license	GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+/*
+* @version      1.0.0
+* @author       Arsenal Media Dev.Team
+* @package      Jshopping
+* @copyright    Copyright (C) 2014 arsenalpay.ru. All rights reserved.
+* @license      GNU/GPL
+*/
 
 defined('_JEXEC') or die('Restricted access');
 if (!defined('_VALID_MOS') 
