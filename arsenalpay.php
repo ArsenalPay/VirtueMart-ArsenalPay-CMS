@@ -2,7 +2,7 @@
 /*
 * @version      1.0.0
 * @author       Arsenal Media Dev.Team
-* @package      Jshopping
+* @package      VirtueMart
 * @copyright    Copyright (C) 2014 arsenalpay.ru. All rights reserved.
 * @license      GNU/GPL
 */
