@@ -1,14 +1,15 @@
 <?php
-/*
+/**
 * @version      1.0.1
 * @author       Arsenal Media Dev.Team
 * @package      VirtueMart
 * @subpackage 	payment
 * @copyright    Copyright (C) 2014 arsenalpay.ru. All rights reserved.
 * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+*
 */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die('Direct Access to ' . basename(__FILE__) . 'is not allowed.');
 
 if (!class_exists('vmPSPlugin'))
         require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
@@ -26,11 +27,14 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $jlang->load ('plg_vmpayment_arsenalpay', JPATH_ADMINISTRATOR, NULL, TRUE);
                 $this->_loggable = TRUE;
                 $this->_debug = TRUE;
+				//assign columns for arsenalpay payment plugin table #_virtuemart_payment_plg_arsenalpay
+                $this->tableFields = array_keys($this->getTableSQLFields());
+				$this->_tablepkey = 'id'; //virtuemart_ARSENALPAY_id';
+				$this->_tableId = 'id'; //'virtuemart_ARSENALPAY_id';
                 //assign payment parameters from plugin configuration to paymentmethod table #_virtuemart_paymentmethods (payment_params column)
                 $varsToPush = $this->getVarsToPush ();
                 $this->setConfigParameterable($this->_configTableFieldName, $varsToPush);
-                //assign columns for arsenalpay payment plugin table #_virtuemart_payment_plg_arsenalpay
-                $this->tableFields = array_keys($this->getTableSQLFields());
+                
             }
         //===============================================================================
         // BACKEND
@@ -46,6 +50,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
         */
         function plgVmDeclarePluginParamsPayment($name, $id, &$data) {
                 return $this->declarePluginParams('payment', $name, $id, $data);
+            }
+        function plgVmDeclarePluginParamsPaymentVM3( &$data) {
+            return $this->declarePluginParams('payment', $data);
             }
 
         function plgVmSetOnTablePluginParamsPayment($name, $id, &$table) {
@@ -98,7 +105,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
          * This functions checks if the called plugin is active one.
          * When yes it is calling the standard method to create the tables
          * @author Valerie Isaksen
-        /*
+		 *
          * We must reimplement this trigger for joomla 1.7
          *
         */
@@ -513,7 +520,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
          * @return null if the payment was not selected, true if the data is valid, error message if the data is not vlaid
          *
          */
-        public function plgVmOnSelectCheckPayment(VirtueMartCart $cart) {
+        public function plgVmOnSelectCheckPayment(VirtueMartCart $cart, &$msg) {
             return $this->OnSelectCheck($cart);
         }
 
