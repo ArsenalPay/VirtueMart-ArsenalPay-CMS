@@ -1,15 +1,16 @@
 <?php
 /*
-* @version      1.0.1
+* @version      1.0.0
 * @author       Arsenal Media Dev.Team
 * @package      VirtueMart
-* @subpackage 	payment
 * @copyright    Copyright (C) 2014 arsenalpay.ru. All rights reserved.
-* @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @license      GNU/GPL
 */
 
 defined('_JEXEC') or die('Restricted access');
-
+if (!defined('_VALID_MOS') 
+        die('Direct Access to ' . basename(__FILE__) . ' is not allowed.');
+ 
 if (!class_exists('vmPSPlugin'))
         require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
 
