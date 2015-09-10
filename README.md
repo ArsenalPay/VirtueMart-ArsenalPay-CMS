@@ -1,16 +1,16 @@
 # ArsenalPay Plugin for VirtueMart of Joomla! CMS
 
-[Arsenal Media LLC](http://www.arsenalmedia.ru/index.php/en)
+*Arsenal Media LLC*
 
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
-1.0.0
+1.0.1
 
-*Compatible with VirtueMart 2.6 for Joomla 2.5*
+*Compatible with VirtueMart 2.6 & 3 for Joomla 2.5*
 
 ## Source
-[Official integration guide page]( https://arsenalpay.ru/site/cmsplugins )
+[Official integration guide page]( https://arsenalpay.ru/developers.html )
 
 Basic feature list:
 
