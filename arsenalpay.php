@@ -75,15 +75,15 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
         function getTableSQLFields() {
                 $SQLfields = array(
                         'id' => 'bigint(1) unsigned NOT NULL AUTO_INCREMENT',
-                        'virtuemart_order_id' => 'int(11) UNSIGNED DEFAULT NULL',
-                        'order_number' => 'char(32) DEFAULT NULL',
-                        'virtuemart_paymentmethod_id' => 'mediumint(1) UNSIGNED DEFAULT NULL',
+                        'virtuemart_order_id' => 'int(11) UNSIGNED ',
+                        'order_number' => 'char(64)',
+                        'virtuemart_paymentmethod_id' => 'mediumint(1) UNSIGNED ',
                         'payment_name' => 'char(255) NOT NULL DEFAULT \'\' ',
                         'payment_order_total' => 'decimal(15,5) NOT NULL DEFAULT \'0.00000\' ',
                         'payment_currency' => 'char(3) ',
-                        'cost_per_transaction' => ' decimal(10,2) DEFAULT NULL ',
-                        'cost_percent_total' => ' decimal(10,2) DEFAULT NULL ',
-                        'tax_id' => 'smallint(11) DEFAULT NULL',
+                        'cost_per_transaction' => ' decimal(10,2) ',
+                        'cost_percent_total' => ' decimal(10,2) ',
+                        'tax_id' => 'smallint(1) ',
                         'user_session' => 'varchar(255)',
 
                         // status report data returned by ArsenalPay to merchant
