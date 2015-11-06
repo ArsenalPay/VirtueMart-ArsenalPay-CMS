@@ -1,10 +1,10 @@
 <?php
 /**
-* @version      1.0.1
-* @author       Arsenal Media Dev.Team
+* @version      1.0.2
+* @author       The ArsenalPay Dev. Team
 * @package      VirtueMart
 * @subpackage 	payment
-* @copyright    Copyright (C) 2014 arsenalpay.ru. All rights reserved.
+* @copyright    Copyright (C) 2014-2015 ArsenalPay. All rights reserved.
 * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *
 */
@@ -27,7 +27,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $jlang->load ('plg_vmpayment_arsenalpay', JPATH_ADMINISTRATOR, NULL, TRUE);
                 $this->_loggable = TRUE;
                 $this->_debug = TRUE;
-				//assign columns for arsenalpay payment plugin table #_virtuemart_payment_plg_arsenalpay
+				/**
+                 * assign columns for arsenalpay payment plugin table #_virtuemart_payment_plg_arsenalpay
+                 */
                 $this->tableFields = array_keys($this->getTableSQLFields());
 				$this->_tablepkey = 'id'; //virtuemart_ARSENALPAY_id';
 				$this->_tableId = 'id'; //'virtuemart_ARSENALPAY_id';
@@ -86,7 +88,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                         'tax_id' => 'smallint(1) ',
                         'user_session' => 'varchar(255)',
 
-                        // status report data returned by ArsenalPay to merchant
+                        /**
+                         * status report data returned by ArsenalPay to merchant
+                         */
                         'arspay_response_ID' => 'char(32)',
                         'arspay_response_FUNCTION' => 'char(15)',//FUNCTION 
                         'arspay_response_RRN' => 'varchar(20)',//RRN 
@@ -145,7 +149,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                         vmInfo (vmText::_ ('VMPAYMENT_ARSENALPAY_PAYMENT_AMOUNT_INCORRECT'));
                         return FALSE;
                     }
-                // Prepare url parameters for payment frame.
+                /**
+                 * Prepare url parameters for payment frame.
+                 */
                 $trx_id = $order['details']['BT']->virtuemart_order_id;
                 $url_params = array(
 				'src' => $method->payment_src,
@@ -167,8 +173,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 
                 
         
-                // Prepare data that should be stored in the database for arsenalpay payment method.
-
+                /**
+                 * Prepare data that should be stored in the database for arsenalpay payment method.
+                 */
                 $dbValues['user_session'] = $return_context;
                 $dbValues['order_number'] = $order['details']['BT']->order_number;
                 $dbValues['payment_name'] = $this->renderPluginName ($method, $order);
@@ -182,8 +189,11 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $this->storePSPluginInternalData($dbValues); // save prepared data to arsenalpay database
                 
                 //=================================================================================
-                // Prepare data into variable $content to be sent to the processing center.
-                // Uncomment if such data will be needed to be sent.
+                /**
+                 * Prepare data into variable $content to be sent to the processing center.
+                 * Uncomment if such data will be needed to be sent.
+                 */
+                
                 /*$post_variables = Array(
                                             'transaction_id'           => $order['details']['BT']->order_number,
 											//url to redirect after confirmation
@@ -207,7 +217,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 													'amount'  				   => $totalInPaymentAmount);
                 $content = http_build_query ($post_variables);  */
                 //==========================================================================
-                // The code for setting an iframe.
+                /**
+                 * The code for setting an iframe.
+                 */
                 $html = '<html><head><title></title><script type="text/javascript">
                         jQuery(document).ready(function () {
                             jQuery(\'#main h3\').css("display", "none");
@@ -215,13 +227,17 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                         </script></head><body>';   
                 $html .= '<iframe name="arspay" src='.$ap_frame_src.' '.$f_params.'></iframe>';
 
-                // Here we assign the pending status (from ArsenalPay configs) while the response will not be received back to the merchant site.
+                /**
+                 * Here we assign the pending status (from ArsenalPay configs) while the response will not be received back to the merchant site.
+                 */
                 $modelOrder = VmModel::getModel ('orders');
                 $order['order_status'] = $method->status_pending;
                 $order['customer_notified'] = 1;
                 $order['comments'] = vmText::sprintf ('VMPAYMENT_ARSENALPAY_PAYMENT_STATUS_WAITING', $order_number);
                 $modelOrder->updateStatusForOneOrder ($order['details']['BT']->virtuemart_order_id, $order, TRUE);
-                // Do nothing while the order will not be confirmed.
+                /**
+                 * Do nothing while the order will not be confirmed.
+                 */
                 $cart->_confirmDone = FALSE;
                 $cart->_dataValidated = FALSE;
                 $cart->setCartIntoSession (); 
@@ -243,13 +259,17 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                     require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
                 }
             $callback_msg = VRequest::getPost();
-            // the GET paymentmethod parameter in notification url. 
+            /**
+             * the GET paymentmethod parameter in notification url.
+             */
             $virtuemart_paymentmethod = vRequest::getVar ('pm', 0);
             if ($virtuemart_paymentmethod!='arsenalpay') {
                 $this->exitf('ERR');
                 }
             if (!($virtuemart_order_id = $callback_msg['ACCOUNT'])) {
-                    // in case of check request: 'YES' - order number exists; 'NO' - no such order number
+                    /**
+                     * in case of check request: 'YES' - order number exists; 'NO' - no such order number
+                     */
                     $this->exitf('ERR');
                 }
             if (!($paymentTable = $this->getDataByOrderId ($virtuemart_order_id))) {
@@ -276,12 +296,14 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 }
 		 		
             //=======================================================================================================================
-            // Here we get preload data from arsenalpay payment table that was stored by method plgVmConfirmedOrder
-            // and just prepare to save it in the renewed table with the response data in case it will be needed for some reason.
-            // Without this block in the renewed table after response all the preload data will be nulled.
+            /** Here we get preload data from arsenalpay payment table that was stored by method plgVmConfirmedOrder
+            * and just prepare to save it in the renewed table with the response data in case it will be needed for some reason.
+            * Without this block in the renewed table after response all the preload data will be nulled.
             //========================================================================================================================
 
-            //check the callback data with the preload confirm data saved in the database
+            /**
+             * check the callback data with the preload confirm data saved in the database
+             */
             $order_info = VirtueMartModelOrders::getOrder($virtuemart_order_id);
             if (($paymentTable->order_number!=$order_info['details']['BT']->order_number) OR 
                     (number_format($paymentTable->payment_order_total, 2, '.', '')!=$callback_msg['AMOUNT'])) {
@@ -374,7 +396,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
             return true;
             } 
 
-        // What to do after payment cancel
+        /**
+         * What to do after payment cancel
+         */
         function plgVmOnUserPaymentCancel() {
                 if (!class_exists('VirtueMartModelOrders')) {
                         require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
@@ -450,7 +474,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 return $html;
             }   
 
-        // Calculations for this payment method and final cost with tax calculation etc.
+        /**
+         * Calculations for this payment method and final cost with tax calculation etc.
+         */
         function getCosts(VirtueMartCart $cart, $method, $cart_prices) {
                 if (preg_match('/%$/', $method->cost_percent_total)) {
                         $cost_percent_total = substr($method->cost_percent_total, 0, -1);
@@ -490,7 +516,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 }
             }
 
-            // probably did not gave his BT:ST address
+            /**
+             * probably did not gave his BT:ST address
+             */
             if (!is_array($address)) {
                 $address = array();
                 $address['virtuemart_country_id'] = 0;

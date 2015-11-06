@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>ArsenalPay</name>
-    <creationDate>September 9 2014</creationDate>
-    <author>ArsenalPay for VirtueMart</author>
+    <creationDate>November 6 2015</creationDate>
+    <author>The ArsenalPay Dev. Team</author>
     <authorUrl>http://www.arsenalpay.ru</authorUrl>
-    <copyright>Copyright (C) 2014-2015 ArsenalMedia. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2015 ArsenalPay. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>ArsenalPay payment plugin for VirtueMart</description>
 
     <files>

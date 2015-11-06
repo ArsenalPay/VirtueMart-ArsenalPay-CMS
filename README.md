@@ -5,9 +5,9 @@
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
-1.0.1
+1.0.2
 
-*Compatible with VirtueMart 2.6 & 3 for Joomla 2.5*
+*Compatible with VirtueMart 2.6 & 3 for Joomla 2.5 & 3*
 
 ## Source
 [Official integration guide page]( https://arsenalpay.ru/developers.html )
@@ -48,8 +48,9 @@ Basic feature list:
 
 ## How to uninstall
 2. Delete created ArsenalPay method from **Components->VirtueMart->Payment Methods**.
-3. To delete files from your server unistall ArsenalPay using Joomla! extension manager.
-4. Delete all tables from your database created by ArsenalPay if needed.
+3. Disable ArsenalPay plugin in Joomla! extension manager.
+4. To delete files from your server unistall ArsenalPay using Joomla! extension manager.
+4. Delete all tables from your database created by ArsenalPay if needed .
 
 ## Usage
 After successful installation and proper settings new choice of payment method with ArsenalPay will appear on your site. To make payment for an order a payer will need to:
@@ -72,12 +73,13 @@ After successful installation and proper settings new choice of payment method w
 ### УСТАНОВКА
 1. Скачайте  zip архив с платежным плагином ArsenalPay на `https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/` .
 2. Зайдите в административную панель Joomla! и установите плагин через **Менеджер расширений**.
-3. После успешной установки плагина зайдите в **Компоненты->VirtueMart->Методы оплаты**.
+3. После успешной установки плагина зайдите в **Компоненты->VirtueMart->Способы оплаты**.
 4. Там создайте новый метод оплаты, указав название для данного метода (например ArsenalPay) и изменив **Опубликовано** на **Да**;
-5. После нажатия на **Сохранить**, Вам станут доступны настройки плагина.
+5. В ниспадающем меню **Способ оплаты** выберите **ArsenalPay**;
+6. После нажатия на **Сохранить**, Вам станут доступны настройки плагина.
 
 ### НАСТРОЙКИ
-1. В **Компоненты->VirtueMart->Методы оплаты** выберите созданный во время установки метод оплаты через ArsenalPay;
+1. В **Компоненты->VirtueMart->Способы оплаты** выберите созданный во время установки метод оплаты через ArsenalPay;
 2. Выберите закладку с настройками.
  - Заполните поля **Уникальный токен** и **Ключ (key) **, присвоенными Вам токеном и ключом для подписи.
  - Проверьте **URL-адрес фрейма** должен быть установлен как `https://arsenalpay.ru/payframe/pay.php`
@@ -91,9 +93,10 @@ After successful installation and proper settings new choice of payment method w
  - Вы можете подгонять ширину, высоту, границу и прокрутку платежного фрейма, задавая соответствующие значения параметров iframe.
 
 ### УДАЛЕНИЕ
-1. Удалите метод оплаты ArsenalPay из методов оплат VirtueMart по пути **Компоненты->VirtueMart->Методы оплаты**
-2. Чтобы удалить файлы с сервера, деинсталлируйте ArsenalPay через менеджер расширений Joomla!
-3. Также при необходимости удалите созданные ArsenalPay таблицы в базе данных.
+1. Удалите метод оплаты ArsenalPay из методов оплат VirtueMart по пути **Компоненты->VirtueMart->Способы оплаты**
+2. Деактивируйте ArsenalPay через менеджер расширений Joomla!
+3. Чтобы удалить файлы с сервера, деинсталлируйте ArsenalPay через менеджер расширений Joomla!
+4. Также при необходимости удалите созданные ArsenalPay таблицы в базе данных и файлы на сервере в папке `plugins/vmpayment/arsenalpay`.
 
 ### ИСПОЛЬЗОВАНИЕ
 После успешной установки и настройки модуля на сайте появится возможность выбора платежной системы ArsenalPay.
