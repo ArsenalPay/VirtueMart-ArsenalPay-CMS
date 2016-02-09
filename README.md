@@ -1,7 +1,6 @@
 # ArsenalPay Plugin for VirtueMart of Joomla! CMS
 
-*Arsenal Media LLC*
-
+*Arsenal Media LLC*  
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
@@ -20,8 +19,7 @@ Basic feature list:
  * Supports two languages (Russian, English).
  
 ## How to install
-1. Download as zip archive from 
-`https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/`
+1. Download the latest release of ArsenalPay payment plugin as zip archive from [releases](https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/releases)
 2. Go to Joomla! administrator panel to install the plugin using extension manager.
 3. After plugin successfully installed go to **Components->VirtueMart->Payment Methods**.
 4. Create a new payment method. 
@@ -71,7 +69,7 @@ After successful installation and proper settings new choice of payment method w
 За более подробной информацией о платежной системе ArsenalPay обращайтесь по адресу [arsenalpay.ru](http://arsenalpay.ru)
 
 ### УСТАНОВКА
-1. Скачайте  zip архив с платежным плагином ArsenalPay на `https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/` .
+1. Скачайте последний релиз платежного модуля ArsenalPay из [вкладки с релизами](https://github.com/ArsenalPay/VirtueMart-ArsenalPay-CMS/releases).
 2. Зайдите в административную панель Joomla! и установите плагин через **Менеджер расширений**.
 3. После успешной установки плагина зайдите в **Компоненты->VirtueMart->Способы оплаты**.
 4. Там создайте новый метод оплаты, указав название для данного метода (например ArsenalPay) и изменив **Опубликовано** на **Да**;
@@ -129,7 +127,7 @@ ArsenalPay – удобный и надежный платежный серви�
 
 А ещё мы можем взять на техническую поддержку ваш сайт и создать для вас мобильные приложения для Android и iOS. 
 
-ArsenalPay – увеличить прибыль просто! 
+ArsenalPay – увеличить прибыль просто!  
 Мы работаем 7 дней в неделю и 24 часа в сутки. А вместе с нами множество российских и зарубежных компаний. 
 
 ### Как подключиться: 
@@ -141,8 +139,7 @@ ArsenalPay – увеличить прибыль просто!
 
 Всегда с радостью ждем ваших писем с предложениями. 
 
-pay@arsenalpay.ru 
-
+pay@arsenalpay.ru  
 [arsenalpay.ru](https://arsenalpay.ru)
 
 
