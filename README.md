@@ -60,7 +60,7 @@ After successful installation and proper settings new choice of payment method w
 5. After filling out the information depending on the payment type he will receive SMS about payment confirmation or will be redirected to the page with the result of his payment.
 
 ## Changelog
-1.0.3 - Upgrade if you need to handle the amount in callback less that the total amount of the order. Added the cart clearing.
+1.0.3 - Upgrade if you need to handle the amount in callback less that the total amount of the order. Fixed the cart emptying.
 
 ------------------
 ### О МОДУЛЕ
