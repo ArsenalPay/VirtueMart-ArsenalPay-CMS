@@ -4,9 +4,9 @@
     <creationDate>February 10 2016</creationDate>
     <author>The ArsenalPay Dev. Team</author>
     <authorUrl>http://www.arsenalpay.ru</authorUrl>
-    <copyright>Copyright (C) 2015 ArsenalPay. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2015-2016 ArsenalPay. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <description>ArsenalPay payment plugin for VirtueMart</description>
 
     <files>

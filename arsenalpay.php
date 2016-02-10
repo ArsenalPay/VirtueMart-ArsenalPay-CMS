@@ -1,10 +1,10 @@
 <?php
 /**
-* @version      1.0.2
+* @version      1.0.4
 * @author       The ArsenalPay Dev. Team
 * @package      VirtueMart
 * @subpackage 	payment
-* @copyright    Copyright (C) 2014-2015 ArsenalPay. All rights reserved.
+* @copyright    Copyright (C) 2014-2016 ArsenalPay. All rights reserved.
 * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *
 */
