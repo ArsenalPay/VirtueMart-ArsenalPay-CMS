@@ -145,7 +145,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 
                 $paymentCurrency = CurrencyDisplay::getInstance($method->payment_currency);
                 $totalInPaymentAmount = round($paymentCurrency->convertCurrencyTo($method->payment_currency, $order['details']['BT']->order_total, false), 2);
-				if ($totalInPaymentAmount<= 0) {
+				if ($totalInPaymentAmount <= 0) {
                         vmInfo (vmText::_ ('VMPAYMENT_ARSENALPAY_PAYMENT_AMOUNT_INCORRECT'));
                         return FALSE;
                     }
@@ -171,8 +171,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $f_scrolling = $method->f_scrolling;
                 $f_params = "width={$f_width} height={$f_height} frameborder={$f_border} scrolling={$f_scrolling}";
 
-                
-        
                 /**
                  * Prepare data that should be stored in the database for arsenalpay payment method.
                  */
@@ -241,6 +239,10 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $cart->_confirmDone = FALSE;
                 $cart->_dataValidated = FALSE;
                 $cart->setCartIntoSession (); 
+                $session->clear ('arsenalpay', 'vm');
+                //We delete the old stuff
+
+                $cart->emptyCart ();
                 vRequest::setVar ('html', $html);
                 return TRUE;
             }
@@ -266,49 +268,10 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
             if ($virtuemart_paymentmethod!='arsenalpay') {
                 $this->exitf('ERR');
                 }
-            if (!($virtuemart_order_id = $callback_msg['ACCOUNT'])) {
-                    /**
-                     * in case of check request: 'YES' - order number exists; 'NO' - no such order number
-                     */
-                    $this->exitf('ERR');
-                }
-            if (!($paymentTable = $this->getDataByOrderId ($virtuemart_order_id))) {
-                if ( $callback_msg['FUNCTION']=='check' && $callback_msg['STATUS']=='check' ) { 
-                        $this->exitf( 'NO' );
-                        }
-                // JError::raiseWarning(500, $db->getErrorMsg());
-                $this->exitf('ERR_ACCOUNT');
-                }
-            elseif ( $callback_msg['FUNCTION']=='check' && $callback_msg['FUNCTION']=='check' ) {
-				$this->exitf('YES');
-			}
-            if (!($method = $this->getVmPluginMethod($paymentTable->virtuemart_paymentmethod_id))) {
-                    $this->exitf('ERR');
-                } // Another method was selected, do nothing
-            if (!$this->selectedThisElement ($method->payment_element)) {
-                    $this->exitf('ERR');
-                }
-            //check if the ip is allowed 
-            $REMOTE_ADDR = $_SERVER["REMOTE_ADDR"];
-            $IP_ALLOW = $method->allowed_ip;
-            if( strlen( $IP_ALLOW ) > 0 && $IP_ALLOW != $REMOTE_ADDR ) {
-                    $this->exitf('ERR_IP');
-                }
-		 		
-            //=======================================================================================================================
-            /** Here we get preload data from arsenalpay payment table that was stored by method plgVmConfirmedOrder
-            * and just prepare to save it in the renewed table with the response data in case it will be needed for some reason.
-            * Without this block in the renewed table after response all the preload data will be nulled.
-            //========================================================================================================================
-
             /**
              * check the callback data with the preload confirm data saved in the database
              */
-            $order_info = VirtueMartModelOrders::getOrder($virtuemart_order_id);
-            if (($paymentTable->order_number!=$order_info['details']['BT']->order_number) OR 
-                    (number_format($paymentTable->payment_order_total, 2, '.', '')!=$callback_msg['AMOUNT'])) {
-                    $this->exitf( 'ERR_CALLBACK_DATA' );
-                }
+            
             //=======================================================================================================================
             $keyArray = array(
             'ID',           /* merchant identifier */
@@ -321,6 +284,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
             'DATETIME',     /* Date and time in ISO-8601 format, urlencoded.*/
             'SIGN',         /* callback request sign = md5(md5(ID).md(FUNCTION).md5(RRN).md5(PAYER).md5(AMOUNT).md5(ACCOUNT).md(STATUS).md5(PASSWORD)) */       
             ); 
+
             /**
              * Checking the absence of each parameter in the post request.
              */
@@ -329,36 +293,81 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                             $this->exitf( "ERR_".$key );
                         }
                 }  
+            $virtuemart_order_id = $callback_msg['ACCOUNT'];
+            $order_info = VirtueMartModelOrders::getOrder($virtuemart_order_id);
+
+            //=======================================================================================================================
+            /** Here we get preload data from arsenalpay payment table that was stored by method plgVmConfirmedOrder
+            * and just prepare to save it in the renewed table with the response data in case it will be needed for some reason.
+            * Without this block in the renewed table after response all the preload data will be nulled.
+            * ======================================================================================================================== */
+        
+            if (!($paymentTable = $this->getDataByOrderId ($virtuemart_order_id))) {
+                /**
+                * in case of check request: 'YES' - order number exists; 'NO' - no such order number
+                */
+                if ( $callback_msg['FUNCTION']=='check' && $callback_msg['STATUS']=='check' ) { 
+                        $this->exitf( 'NO' );
+                        }
+                // JError::raiseWarning(500, $db->getErrorMsg());
+                $this->exitf('ERR_ACCOUNT');
+                }
+            else {
+                if (!($method = $this->getVmPluginMethod($paymentTable->virtuemart_paymentmethod_id))) {
+                    $this->exitf('ERR_PAYMENT_METHOD');
+                    } // Another method was selected, do nothing
+                if (!$this->selectedThisElement ($method->payment_element)) {
+                        $this->exitf('ERR_PAYMENT_ELEMENT');
+                    }
+                //check if the ip is allowed 
+                $REMOTE_ADDR = $_SERVER["REMOTE_ADDR"];
+                $IP_ALLOW = $method->allowed_ip;
+                if( strlen( $IP_ALLOW ) > 0 && $IP_ALLOW != $REMOTE_ADDR ) {
+                        $this->exitf('ERR_IP');
+                    }
                 /**
                  * Checking the request sign validness.
                  */
-
-            if( !( $this->_checkSign( $callback_msg, $method->sign_key ) ) ) {
-                $this->exitf( 'ERR_INVALID_SIGN' );
-                }  
-            
-            $modelOrder = VmModel::getModel ('orders');
-            if ( $callback_msg['FUNCTION']=='payment' && $callback_msg['STATUS']=='payment' ) {
-                    $order = array();
-                    $order['order_status'] = $method->status_confirmed;
-                    $order['customer_notified'] = 1;
-                    $order['comments'] = vmText::sprintf ('VMPAYMENT_ARSENALPAY_PAYMENT_STATUS_CONFIRMED', $paymentTable->order_number);
-                    $modelOrder->updateStatusForOneOrder ($virtuemart_order_id, $order, true);
-					
-                    //We delete the old stuff
-                    // get the correct cart session
-                    //$cart = VirtueMartCart::getCart();
-                    //$cart->emptyCart();
-					$this->emptyCart( $paymentTable->user_session, $paymentTable->order_number ); 
-                    $this->exitf( 'OK' );            
+                if( !( $this->_checkSign( $callback_msg, $method->sign_key ) ) ) {
+                    $this->exitf( 'ERR_INVALID_SIGN' );
+                    }  
+                if ( $paymentTable->order_number==$order_info['details']['BT']->order_number && 
+                                    $callback_msg['FUNCTION']=='check' && $callback_msg['FUNCTION']=='check' ) {
+                    $this->exitf('YES');
                 }
-            else {
-                    $order['order_status'] = $method->status_cancelled;
-                    $order['customer_notified'] = 0;
-                    $order['comments'] = vmText::sprintf ('VMPAYMENT_ARSENALPAY_PAYMENT_STATUS_CANCELLED', $paymentTable->order_number);
-                    $modelOrder->updateStatusForOneOrder ($virtuemart_order_id, $order, TRUE);
-                    $this->logInfo ('After status updated to cancelled for order' . $paymentTable->order_number, 'message');
-                    $this->exitf( 'ERR_FUNCTION' );
+                $lessAmount = false;
+                $totalAmount = number_format($paymentTable->payment_order_total, 2, '.', '');
+                if ( $callback_msg['MERCH_TYPE'] == '0' && $totalAmount == $callback_msg['AMOUNT'] ) {
+                    $lessAmount = false;
+                }
+                elseif ( $callback_msg['MERCH_TYPE'] == '1' && $totalAmount >= $callback_msg['AMOUNT'] && $totalAmount == $callback_msg['AMOUNT_FULL'] ) {
+                    $lessAmount = true;
+                }
+                else {
+                    $this->exitf( 'ERR_AMOUNT' );
+                }
+                $modelOrder = VmModel::getModel ('orders');
+                if ( $callback_msg['FUNCTION']=='payment' && $callback_msg['STATUS']=='payment' ) {
+                        $order = array();
+                        $order['order_status'] = $method->status_confirmed;
+                        $order['customer_notified'] = 1;
+                        if ( $lessAmount ) {
+                            $order['comments'] = vmText::sprintf ( 'VMPAYMENT_ARSENALPAY_LESS_PAYMENT_STATUS_CONFIRMED', $paymentTable->order_number, $callback_msg['AMOUNT'] );
+                        }
+                        else {
+                            $order['comments'] = vmText::sprintf ( 'VMPAYMENT_ARSENALPAY_PAYMENT_STATUS_CONFIRMED', $paymentTable->order_number, $callback_msg['AMOUNT'] );
+                        }
+                        $modelOrder->updateStatusForOneOrder ($virtuemart_order_id, $order, true);
+                        $this->exitf( 'OK' );            
+                    }
+                else {
+                        $order['order_status'] = $method->status_cancelled;
+                        $order['customer_notified'] = 0;
+                        $order['comments'] = vmText::sprintf ('VMPAYMENT_ARSENALPAY_PAYMENT_STATUS_CANCELLED', $paymentTable->order_number);
+                        $modelOrder->updateStatusForOneOrder ($virtuemart_order_id, $order, TRUE);
+                        $this->logInfo ('After status updated to cancelled for order ' . $paymentTable->order_number, 'message');
+                        $this->exitf( 'ERR_FUNCTION' );
+                    }
                 }
             
             } 
@@ -403,7 +412,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 if (!class_exists('VirtueMartModelOrders')) {
                         require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
                 }
-
                 $order_number = vRequest::getString('on', '');
                 $virtuemart_paymentmethod_id = vRequest::getInt('pm', '');
                 if (empty($order_number) or empty($virtuemart_paymentmethod_id) or !$this->selectedThisByMethodId($virtuemart_paymentmethod_id)) {
@@ -417,7 +425,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                     $this->logInfo ('getDataByOrderId payment not found: exit ', 'ERROR');
                     return NULL;
                 }
-
                 VmInfo(vmText::_('VMPAYMENT_ARSENALPAY_PAYMENT_CANCELLED'));
                 $session = JFactory::getSession();
                 $return_context = $session->getId();
@@ -455,7 +462,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 if (!$this->selectedThisByMethodId($virtuemart_payment_id)) {
                         return null; // Another method was selected, do nothing
                     }
-
                 $db = JFactory::getDBO();
                 $q = 'SELECT * FROM `' . $this->_tablename . '` '
                         . 'WHERE `virtuemart_order_id` = ' . $virtuemart_order_id;
@@ -515,7 +521,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                     $countries = $method->countries;
                 }
             }
-
             /**
              * probably did not gave his BT:ST address
              */
@@ -523,7 +528,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
                 $address = array();
                 $address['virtuemart_country_id'] = 0;
             }
-
             if (!isset($address['virtuemart_country_id'])) {
                 $address['virtuemart_country_id'] = 0;
             }

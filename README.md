@@ -4,7 +4,7 @@
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
-1.0.2
+1.0.3
 
 *Compatible with VirtueMart 2.6 & 3 for Joomla 2.5 & 3*
 
@@ -58,6 +58,9 @@ After successful installation and proper settings new choice of payment method w
 3. Choose the ArsenalPay payment method.
 4. Check the order detailes and confirm the order.
 5. After filling out the information depending on the payment type he will receive SMS about payment confirmation or will be redirected to the page with the result of his payment.
+
+## Changelog
+1.0.3 - Upgrade if you need to handle the amount in callback less that the total amount of the order. Added the cart clearing.
 
 ------------------
 ### О МОДУЛЕ
