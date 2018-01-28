@@ -4,7 +4,7 @@
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
-1.0.4
+1.0.5
 
 *Compatible with VirtueMart 2.6 & 3 for Joomla 2.5 & 3*
 
@@ -13,7 +13,7 @@
 
 Basic feature list:
 
- * Allows seamlessly integrate unified payment frame into your site.
+ * Allows seamlessly integrate unified payment widget into your site.
  * New payment method ArsenalPay will appear to pay for your products and services.
  * Allows to pay using mobile commerce and bank aquiring. More methods are about to become available. Please check for updates.
  * Supports two languages (Russian, English).
@@ -33,16 +33,11 @@ Basic feature list:
 ## Settings
 1. Choose in **Components->VirtueMart->Payment Methods** created ArsenalPay payment method and go into it.
 3. Click on **Configuration**. 
- - Fill out **Unique token**, **Sign key** fields with your received token and key.
- - Check **Frame URL** to be as `https://arsenalpay.ru/payframe/pay.php`
- - Set **Payment type** as `card` to activate payments with bank cards or `mk` to activate payments from mobile phone accounts.
- - **css parameter**. You can specify CSS file to apply it to the view of payment frame by inserting its url.
- - You can specify ip address only from which it will be allowed to receive callback requests about payments onto your site in **Allowed IP address** field.
+ - Fill out **Widget ID**, **Widget key**, **Callback key** fields with your received widget id, widget ket and key callback key.
  - Set **Callback URL** as `http(s)://[your-site-address]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`. Your online shop will be receiving callback requests about processed payments for automatically order status change. The callbacks will be sent onto this address.
  - If it is needed to check a payer order number before payment processing you should fill out the field of **Check URL** in the module settings with url-address to which ArsenalPay will be sending requests with check parameters. By default the address is the same with **Callback URL**. 
- - Set order statuses for pending, successful and failed transactions.
- - You can display payment page inside frame at your site, or redirect a payer directly to the payment page url.
- - You can adjust **width**, **height**, **frameborder** and **scrolling** of ArsenalPay payment frame by setting iframe parameters.
+ - Set order statuses for pending, successful, holden, refunded, reversed and cancelled transactions.
+ - You can specify ip address only from which it will be allowed to receive callback requests about payments onto your site in **Allowed IP address** field.
 
 ## How to uninstall
 2. Delete created ArsenalPay method from **Components->VirtueMart->Payment Methods**.
@@ -60,7 +55,8 @@ After successful installation and proper settings new choice of payment method w
 5. After filling out the information depending on the payment type he will receive SMS about payment confirmation or will be redirected to the page with the result of his payment.
 
 ## Changelog
-1.0.4 - Upgrade if you need to handle the amount in callback less that the total amount of the order. Fixed the cart emptying.
+* 1.0.5 - Upgrade to move from frame to widget.
+* 1.0.4 - Upgrade if you need to handle the amount in callback less that the total amount of the order. Fixed the cart emptying.
 
 ------------------
 ### О МОДУЛЕ
@@ -82,16 +78,11 @@ After successful installation and proper settings new choice of payment method w
 ### НАСТРОЙКИ
 1. В **Компоненты->VirtueMart->Способы оплаты** выберите созданный во время установки метод оплаты через ArsenalPay;
 2. Выберите закладку с настройками.
- - Заполните поля **Уникальный токен** и **Ключ (key)**, присвоенными Вам токеном и ключом для подписи.
- - Проверьте **URL-адрес фрейма** должен быть установлен как `https://arsenalpay.ru/payframe/pay.php`
- - Установите **Тип оплаты** как `card` для активации платежей с пластиковых карт или  как `mk` — платежей с аккаунтов мобильных телефонов.
- - Вы можете задать **Параметр css** для применения к отображению платежного фрейма, указав url css-файла.
+ - Заполните поля **Widget ID**, **Widget Key** и **Callback key**, присвоенными Вам номером виджета, ключом виджета и ключом для проверки подписи.
+ - Ваш интернет-магазин будет получать уведомления о совершенных платежах: на адрес, указанный в поле **URL для обратного запроса**, от ArsenalPay будет поступать запрос с результатом платежа для фиксирования статусов заказа в системе предприятия.
+ - Установите статусы заказов на время ожидания оплаты, после подтверждения платежа, неудавшегося платежа, полного возврата платежа, частичного возврата платежа, отказа от платежа, и случая, когда средства на карте были зарезервированы, но еще не списаны.
  - Вы можете задать ip-адрес, только с которого будут разрешены обратные запросы о совершаемых платежах, в поле **Разрешенный IP-адрес**.
- - Для **URL для обратного запроса** задайте значение `http(s)://[ваш-адрес-сайта]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`. Ваш интернет-магазин будет получать уведомления о совершенных платежах. На адрес, указанный в этом поле, от ArsenalPay будет поступать запрос с результатом платежа для фиксирования статусов заказа в системе предприятия. 
- - При необходимости осуществления проверки номера заказа перед проведением платежа, заполните поле **URL для проверки**, на который от ArsenalPay будет поступать запрос на проверку. По умолчанию значение совпадает с **URL для обратного запроса**.
- - Установите статус для ожидаемых, успешных и неудавшихся платежей.
- - Вы можете отображать платежную страницу внутри фрейма на Вашем сайте, либо перенаправлять пользователя напрямую по адресу платежной страницы.
- - Вы можете подгонять ширину, высоту, границу и прокрутку платежного фрейма, задавая соответствующие значения параметров iframe.
+
 
 ### УДАЛЕНИЕ
 1. Удалите метод оплаты ArsenalPay из методов оплат VirtueMart по пути **Компоненты->VirtueMart->Способы оплаты**
