@@ -33,7 +33,7 @@ Basic feature list:
 ## Settings
 1. Choose in **Components->VirtueMart->Payment Methods** created ArsenalPay payment method and go into it.
 3. Click on **Configuration**. 
- - Fill out **Widget ID**, **Widget key**, **Callback key** fields with your received widget id, widget ket and key callback key.
+ - Fill out **widget**, **widgetKey**, **callbackKey** fields with your received widget, widget ket and key callbackKey.
  - Set **Callback URL** as `http(s)://[your-site-address]/index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component&pm=arsenalpay`. Your online shop will be receiving callback requests about processed payments for automatically order status change. The callbacks will be sent onto this address.
  - If it is needed to check a payer order number before payment processing you should fill out the field of **Check URL** in the module settings with url-address to which ArsenalPay will be sending requests with check parameters. By default the address is the same with **Callback URL**. 
  - Set order statuses for pending, successful, holden, refunded, reversed and cancelled transactions.
@@ -78,7 +78,7 @@ After successful installation and proper settings new choice of payment method w
 ### НАСТРОЙКИ
 1. В **Компоненты->VirtueMart->Способы оплаты** выберите созданный во время установки метод оплаты через ArsenalPay;
 2. Выберите закладку с настройками.
- - Заполните поля **Widget ID**, **Widget Key** и **Callback key**, присвоенными Вам номером виджета, ключом виджета и ключом для проверки подписи.
+ - Заполните поля **widget**, **widgetKey** и **callbackKey**, присвоенными Вам номером виджета, ключом виджета и ключом для проверки подписи.
  - Ваш интернет-магазин будет получать уведомления о совершенных платежах: на адрес, указанный в поле **URL для обратного запроса**, от ArsenalPay будет поступать запрос с результатом платежа для фиксирования статусов заказа в системе предприятия.
  - Установите статусы заказов на время ожидания оплаты, после подтверждения платежа, неудавшегося платежа, полного возврата платежа, частичного возврата платежа, отказа от платежа, и случая, когда средства на карте были зарезервированы, но еще не списаны.
  - Вы можете задать ip-адрес, только с которого будут разрешены обратные запросы о совершаемых платежах, в поле **Разрешенный IP-адрес**.
@@ -126,7 +126,7 @@ ArsenalPay – увеличить прибыль просто!
 
 ### Как подключиться: 
 1. Вы скачали модуль и установили его у себя на сайте;
-2. Отправьте нам письмом ссылку на Ваш сайт на pay@arsenalpay.ru либо оставьте заявку на [сайте](https://arsenalpay.ru/#register) через кнопку "Подключиться";
+2. Отправьте нам письмом ссылку на Ваш сайт на pay@arsenalpay.ru либо оставьте заявку на [сайте](https://arsenalpay.ru/#registerModal) через кнопку "Подключиться";
 3. Мы Вам вышлем коммерческие условия и технические настройки;
 4. После Вашего согласия мы отправим Вам проект договора на рассмотрение.
 5. Подписываем договор и приступаем к работе.
