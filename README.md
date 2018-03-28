@@ -4,7 +4,7 @@
 [Arsenal Pay processing center](https://arsenalpay.ru/)
 
 ## Version
-1.0.5
+1.1.0
 
 *Compatible with VirtueMart 2.6 & 3 for Joomla 2.5 & 3*
 
@@ -38,6 +38,7 @@ Basic feature list:
  - If it is needed to check a payer order number before payment processing you should fill out the field of **Check URL** in the module settings with url-address to which ArsenalPay will be sending requests with check parameters. By default the address is the same with **Callback URL**. 
  - Set order statuses for pending, successful, holden, refunded, reversed and cancelled transactions.
  - You can specify ip address only from which it will be allowed to receive callback requests about payments onto your site in **Allowed IP address** field.
+ - If you are connected to [online cash](https://arsenalpay.ru/documentation.html#54-fz-integraciya-s-onlajn-kassoj), set taxes for product and shipment, which will appear in the check.
 
 ## How to uninstall
 2. Delete created ArsenalPay method from **Components->VirtueMart->Payment Methods**.
@@ -55,6 +56,7 @@ After successful installation and proper settings new choice of payment method w
 5. After filling out the information depending on the payment type he will receive SMS about payment confirmation or will be redirected to the page with the result of his payment.
 
 ## Changelog
+* 1.1.1 - Upgrade if you need to integration with check online (54-FZ).
 * 1.0.5 - Upgrade to move from frame to widget.
 * 1.0.4 - Upgrade if you need to handle the amount in callback less that the total amount of the order. Fixed the cart emptying.
 
@@ -82,6 +84,7 @@ After successful installation and proper settings new choice of payment method w
  - Ваш интернет-магазин будет получать уведомления о совершенных платежах: на адрес, указанный в поле **URL для обратного запроса**, от ArsenalPay будет поступать запрос с результатом платежа для фиксирования статусов заказа в системе предприятия.
  - Установите статусы заказов на время ожидания оплаты, после подтверждения платежа, неудавшегося платежа, полного возврата платежа, частичного возврата платежа, отказа от платежа, и случая, когда средства на карте были зарезервированы, но еще не списаны.
  - Вы можете задать ip-адрес, только с которого будут разрешены обратные запросы о совершаемых платежах, в поле **Разрешенный IP-адрес**.
+ - Если вы подключены к [онлайн кассе](https://arsenalpay.ru/documentation.html#54-fz-integraciya-s-onlajn-kassoj), то в блоке **Интеграция с онлайн кассой** установите налоговые ставки для товаров и доставки.
 
 
 ### УДАЛЕНИЕ
