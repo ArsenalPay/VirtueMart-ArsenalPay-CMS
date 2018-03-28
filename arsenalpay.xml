@@ -6,7 +6,7 @@
     <authorUrl>http://www.arsenalpay.ru</authorUrl>
     <copyright>Copyright (C) 2015-2018 ArsenalPay. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
-    <version>1.0.5</version>
+    <version>1.1.0</version>
     <description>ArsenalPay payment plugin for VirtueMart</description>
 
     <files>

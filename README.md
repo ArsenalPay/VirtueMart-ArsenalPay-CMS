@@ -38,7 +38,7 @@ Basic feature list:
  - If it is needed to check a payer order number before payment processing you should fill out the field of **Check URL** in the module settings with url-address to which ArsenalPay will be sending requests with check parameters. By default the address is the same with **Callback URL**. 
  - Set order statuses for pending, successful, holden, refunded, reversed and cancelled transactions.
  - You can specify ip address only from which it will be allowed to receive callback requests about payments onto your site in **Allowed IP address** field.
- - If you are connected to [online cash](https://arsenalpay.ru/documentation.html#54-fz-integraciya-s-onlajn-kassoj), set taxes for product and shipment, which will appear in the check.
+ - If you have integrated with <a href='https://arsenalpay.ru/documentation.html#54-fz-integraciya-s-onlajn-kassoj'>online checkout</a>, set the tax parameters which will be sent to the Federal Tax Service.
 
 ## How to uninstall
 2. Delete created ArsenalPay method from **Components->VirtueMart->Payment Methods**.
