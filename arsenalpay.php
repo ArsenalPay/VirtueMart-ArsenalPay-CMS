@@ -290,8 +290,9 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 		if (!($this->_checkParams($this->callback))) {
 			$this->exitf('ERR');
 		}
+                $modelOrder = VmModel::getModel('orders');
 		$virtuemart_order_id = $this->callback['ACCOUNT'];
-		$order_info          = VirtueMartModelOrders::getOrder($virtuemart_order_id);
+		$order_info          = $modelOrder->getOrder($virtuemart_order_id);
 		$function            = $this->callback['FUNCTION'];
 
 		//=======================================================================================================================
@@ -855,7 +856,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 			$cost_percent_total = $method->cost_percent_total;
 		}
 
-		return ($method->cost_per_transaction + ($cart_prices['salesPrice'] * $cost_percent_total * 0.01));
+		return ((float)$method->cost_per_transaction + ((float)$cart_prices['salesPrice'] * (float)$cost_percent_total * 0.01));
 	}
 
 	/**
