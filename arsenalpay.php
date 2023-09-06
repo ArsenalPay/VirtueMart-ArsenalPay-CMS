@@ -1,6 +1,6 @@
 <?php
 /**
- * @version       1.0.5
+ * @version       1.2.1
  * @author        The ArsenalPay Dev. Team
  * @package       VirtueMart
  * @subpackage    payment
@@ -960,7 +960,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 	 *
 	 */
 
-	public function plgVmonSelectedCalculatePricePayment(VirtueMartCart $cart, array &$cart_prices, &$cart_prices_name) {
+	public function plgVmOnSelectedCalculatePricePayment(VirtueMartCart $cart, array &$cart_prices, &$cart_prices_name) {
 		return $this->onSelectedCalculatePrice($cart, $cart_prices, $cart_prices_name);
 	}
 
@@ -1025,7 +1025,7 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 	 * @return mixed Null when for payment methods that were not selected, text (HTML) otherwise
 	 * @author Valerie Isaksen
 	 */
-	function plgVmonShowOrderPrintPayment($order_number, $method_id) {
+	function plgVmOnShowOrderPrintPayment($order_number, $method_id) {
 		return $this->onShowOrderPrint($order_number, $method_id);
 	}
 
