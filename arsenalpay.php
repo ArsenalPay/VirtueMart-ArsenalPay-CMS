@@ -1,6 +1,6 @@
 <?php
 /**
- * @version       1.2.1
+ * @version       1.2.2
  * @author        The ArsenalPay Dev. Team
  * @package       VirtueMart
  * @subpackage    payment
@@ -306,7 +306,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 			if ($function == 'check') {
 				$this->exitf('NO');
 			}
-			// JError::raiseWarning(500, $db->getErrorMsg());
 			$this->log('Error: order #' . $virtuemart_order_id . ' was not founded');
 			$this->exitf('ERR');
 		}
@@ -771,12 +770,10 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 		}
 		if (!($virtuemart_order_id = VirtueMartModelOrders::getOrderIdByOrderNumber($order_number))) {
 			$this->logInfo('getOrderIdByOrderNumber payment not found: exit ', 'ERROR');
-
 			return null;
 		}
 		if (!($payment_table = $this->getDataByOrderNumber($order_number))) {
 			$this->logInfo('getDataByOrderId payment not found: exit ', 'ERROR');
-
 			return null;
 		}
 		VmInfo(vmText::_('VMPAYMENT_ARSENALPAY_PAYMENT_CANCELLED'));
@@ -825,14 +822,8 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 		if (!$this->selectedThisByMethodId($virtuemart_payment_id)) {
 			return null; // Another method was selected, do nothing
 		}
-		$db = JFactory::getDBO();
-		$q  = 'SELECT * FROM `' . $this->_tablename . '` '
-		      . 'WHERE `virtuemart_order_id` = ' . $virtuemart_order_id;
-		$db->setQuery($q);
-		if (!($payment_table = $db->loadObject())) {
-			vmWarn(500, $q . " " . $db->getErrorMsg());
-
-			return '';
+                if (!($payment_table = $this->getDataByOrderId($virtuemart_order_id))) {
+			return null;
 		}
 		$this->getPaymentCurrency($payment_table);
 
@@ -855,7 +846,6 @@ class plgVmPaymentArsenalpay extends vmPSPlugin {
 		else {
 			$cost_percent_total = $method->cost_percent_total;
 		}
-
 		return ((float)$method->cost_per_transaction + ((float)$cart_prices['salesPrice'] * (float)$cost_percent_total * 0.01));
 	}
 
